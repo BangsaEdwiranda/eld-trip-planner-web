@@ -31,7 +31,7 @@ function rowCenterY(rowIdx: number): number {
 }
 
 /** Reference labels: Midnight / 2…11 / Noon / 13…23 / Midnight (hour 1 blank). */
-function hourLabel(h: number): string {
+export function hourLabel(h: number): string {
   if (h === 0 || h === 24) return 'Midnight'
   if (h === 12) return 'Noon'
   if (h === 1) return ''
@@ -39,7 +39,7 @@ function hourLabel(h: number): string {
 }
 
 /** A duty change gets a city/state callout under the grid (signature of a real log). */
-function isPlaceCallout(note: string, location: string, status: DutyStatus): boolean {
+export function isPlaceCallout(note: string, location: string, status: DutyStatus): boolean {
   const loc = location?.trim()
   if (!loc) return false
   if (/^en[ -]?route/i.test(loc)) return false // driving spans aren't a place
