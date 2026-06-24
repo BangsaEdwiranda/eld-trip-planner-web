@@ -41,6 +41,11 @@ export function RouteMap({ trip, activeStopKey, onHoverStop }: Props) {
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        // Tiles come from the keyless public CARTO CDN, which occasionally drops
+        // requests under burst load. Render a transparent tile on failure (no
+        // broken squares) and keep a larger off-screen buffer to reduce refetches.
+        errorTileUrl="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+        keepBuffer={4}
       />
       <FitBounds bounds={bounds} />
 
