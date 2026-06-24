@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-slate-50 text-ink antialiased;
+    font-feature-settings: 'cv05', 'cv08', 'ss01';
+  }
+}
+
+@layer components {
+  .input-base {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-ink
+      shadow-sm transition placeholder:text-slate-400
+      focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30;
+  }
+
+  .label-base {
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5
+      text-sm font-semibold text-white shadow-sm transition
+      hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500/40
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white
+      px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition
+      hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-500/30;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-card;
+  }
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.6s infinite;
+}
+
+/* Leaflet container needs an explicit height; tame z-index under our UI */
+.leaflet-container {
+  font: inherit;
+  z-index: 0;
+}
+
+/* Print: show only the ELD log sheets — one clean card per page */
+@media print {
+  /* margin:0 makes the browser draw NO header/footer (date, URL, page #) in the
+     page margin — the cleanest PDF without relying on the user's checkbox. We
+     restore breathing room via padding on each printed sheet below. */
+  @page {
+    margin: 0;
+  }
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  /* The numbered duty breakdown is a screen aid, not part of the official log.
+     The official remarks are the under-grid callouts (inside the SVG). */
+  .duty-breakdown {
+    display: none !important;
+  }
+  /* The sheet list spans the full page when chrome is hidden */
+  .print-area {
+    display: block !important;
+  }
+  /* One sheet per page; never split a sheet across a page break.
+     Padding stands in for the page margin we zeroed out above. */
+  .eld-page {
+    break-inside: avoid;
+    padding: 10mm;
+  }
+  .eld-page + .eld-page {
+    break-before: page;
+  }
+  .sheet-page {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #94a3b8 !important;
+  }
+  /* Let the SVG grid use the full printable width */
+  .eld-page svg {
+    min-width: 0 !important;
+  }
+  .eld-page .overflow-x-auto {
+    overflow: visible !important;
+  }
+}
