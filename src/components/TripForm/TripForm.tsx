@@ -91,9 +91,8 @@ export function TripForm({ onSubmit, isSubmitting, serverFieldErrors, seed }: Pr
           />
         </svg>
         <span>
-          The trip starts now, in the{' '}
-          <span className="font-medium text-slate-600">current location's</span> local time zone — all
-          log times use it.
+          The trip <span className="font-medium text-slate-600">starts now and drives straight to the
+          pickup</span>, in the current location's local time zone — all log times use that zone.
         </span>
       </p>
 
